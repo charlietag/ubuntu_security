@@ -1,0 +1,58 @@
+
+# Change to your email
+local certbot_email="email@gmail.com"
+
+# Apply action:
+#               dns-cloudflare | dns | webroot | renew | revoke_destroy | disable
+local certbot_apply_action="disable"
+
+
+
+
+
+# --------------------------------------------------
+# Install certbot using EPEL repo - So ignore here
+# --------------------------------------------------
+# local certbot_src_url="https://github.com/certbot/certbot.git"
+#
+# --------------------------------------------------
+#                  END
+# --------------------------------------------------
+
+
+# ========================================================
+#        Load servername from nginx config
+#           >>> DO NOT modify these vars <<<<<
+# ========================================================
+. ${PLUGINS}/plugin_load_databag.sh F_02_PKG_07_nginx_02_ssl_site_config.cfg
+local certbot_servername="${server_name}"
+
+# Custom your webroot "ONLY for WEBROOT verification"
+local certbot_webroot="${web_root}"
+
+# ========================================================
+# ONLY for dns-cloudflare
+# ========================================================
+# -- wildcard --
+# cause *.domain only for http header *.your.domain.com ---> failed for https://your.domain.com
+# your.domain.com means:
+# -d your.domain.com -d *.your.domain.com
+local certbot_wild_servername="*.${certbot_servername}"
+
+# --- API ---
+# Ref. https://certbot-dns-cloudflare.readthedocs.io/en/stable/
+
+# -- api token ( Recommended )--
+# Cloudflare API token used by Certbot --- credentials file using restricted API Token
+local certbot_dns_cloudflare_api_token="0123456789abcdef0123456789abcdef01234567"
+
+# -- api key ( NOT Recommended)--
+# Cloudflare API credentials used by Certbot
+# local certbot_dns_cloudflare_email="email@gmail.com"
+# local certbot_dns_cloudflare_api_key="0123456789abcdef0123456789abcdef01234"
+
+
+
+
+# -- seconds waiting for cloudflare to propagate dns --
+local certbot_wait_cf_seconds="10"

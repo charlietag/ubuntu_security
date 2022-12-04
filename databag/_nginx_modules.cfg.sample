@@ -1,0 +1,86 @@
+# -----------------------------
+# Do or Not do fail2ban setup
+# -----------------------------
+# [ enable | disable ]
+local this_script_status="disable"
+# ************** Nginx Header **************
+# -----------------------
+# Description
+# Define script path
+# -----------------------
+# Script of nginx headers_more
+local headers_install_script="/opt/nginx_scripts/package_ngx_headers.sh"
+
+# Nginx extra config (headers_more):
+#   Default=> Nginx: "nginx" , Apache: "Apache"
+local ng_headers_server="CharlieTag"
+
+# ************** WAF **************
+# -----------------------
+# Define script path
+# Script of ModSecurity (libmodsecurity)
+# -----------------------
+local waf_install_script="/opt/nginx_scripts/package_ngx_waf.sh"
+
+
+# -----------------------
+# Options for default setup
+# ng_waf_rules="COMODO | OWASP | cwaf_charlietag" , Default use "cwaf_charlietag"
+# cwaf_charlietag - clone of comodo waf rules
+# -----------------------
+# ~~~ OWASP ~~~
+#local ng_waf_rules="OWASP"
+
+# Redmine agile plugin: 949110
+# WordPress post editing: 949100 959100
+#local ng_waf_rules_owasp_SecRuleRemoveById="949100 949110 959100"  # ---> [ disable | 949100 | 949100 949110 959100 ]
+#local ng_waf_rules_azure="disable" #(experiment) ---> [ enable | disable ]
+
+
+# ~~~ COMODO ~~~
+# Recommended: COMODO
+#             (register an account for 1-year-free, require renew 1-year-free order every year)
+# * OWSASP would have false positive while:
+#   * Wordpress , updating articles
+#   * Redmine   , Click between pages
+# Sign UP : https://waf.comodo.com/
+
+#local ng_waf_rules="COMODO"
+#local ng_waf_rules_account="email@gmail.com"
+#local ng_waf_rules_password="xxxxxxxxxxxxxx"
+
+# ~~~ cwaf_charlietag ~~~
+local ng_waf_rules="cwaf_charlietag"
+
+
+
+# -----------------------------
+# Fail2ban setting
+# -----------------------------
+# Enabled usage:
+#   enabled: true | false
+#
+# Port setting: choose which port to be banned if error found
+#   Leverage firewalld daemon , so use predefined info in firewalld /usr/lib/firewalld/services
+#     port   : http | https | ssh | http,https
+#   Customized config
+#     port   : 2222 | 3333 | 2222,3333
+
+# ############
+#   nginx-waf
+# ############
+local ng_waf_enabled="true"
+local ng_waf_port="http,https"
+local ng_waf_logpaths='%(nginx_error_log)s'
+# logpath ---> fixed to default (systemd+/var/log)
+#local ng_waf_logpaths='/var/log/nginx/*.error.log'
+
+#
+# ************** UPDATE **************
+# -----------------------
+# Define script path
+# Script of updating nginx security related script
+# -----------------------
+local cron_ngx_modules_updates="/opt/nginx_scripts/cron_ngx_modules_updates.sh"
+
+

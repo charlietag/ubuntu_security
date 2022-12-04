@@ -1,0 +1,70 @@
+#Put local vars here for the specific function
+
+# -----------------------------
+# Do or Not do fail2ban setup
+# -----------------------------
+# [ enable | disable ]
+local cron_check_script_status="disable"
+
+# -----------------------------
+# Fail2ban global setting
+# -----------------------------
+#   in (findtime) seconds, found faild attempt usage (maxretry) times , ban the IP for (bantime) seconds
+#   findtime does not have to be equal to bantime, I do this just for easy calculation
+# look up logs for last 10 minutes
+local f2b_findtime="600"
+local f2b_maxretry="5"
+#
+#ban for 10 minutes
+#local f2b_bantime="600"
+
+# ban IP for 3 days - 259200
+#local f2b_bantime="259200"
+
+# ipset v7.1: Syntax error: '2592000' is out of range 0-2147483
+# ban IP for 30 days - 2592000 <--- Due to the limit range 0-2147483
+# set this value to 10 days
+# local f2b_bantime="864000"
+
+# CentOS8 use nft (instead of iptables+ipset)
+# nft works fine with this limit
+local f2b_bantime="2592000"
+
+# -----------------------------
+# Setup monitored item
+# -----------------------------
+# Enabled usage:
+#   enabled: true | false
+#
+# Port setting: choose which port to be banned if error found
+#   Leverage firewalld daemon , so use predefined info in firewalld /usr/lib/firewalld/services
+#     port   : http | https | ssh | http,https
+#   Customized config
+#     port   : 2222 | 3333 | 2222,3333
+
+# ############
+#   sshd
+# ############
+# Ref. https://github.com/fail2ban/fail2ban/issues/1719
+local sshd_enabled="true"
+local sshd_port="2222"
+local sshd_mode="aggressive"        # normal (default), ddos, extra or aggressive (combines all)
+# logpath ---> fixed to default (systemd+/var/log)
+
+
+# ############
+#   nginx-limit-req
+# ############
+local ng_limit_req_enabled="true"
+local ng_limit_req_port="http,https"
+# logpath ---> fixed to default
+#local ng_limit_req_logpaths=('/var/log/nginx/*.error.log')
+
+# ############
+#   nginx-botsearch
+# ############
+local ng_botsearch_enabled="true"
+local ng_botsearch_port="http,https"
+# logpath ---> fixed to default
+#local ng_botsearch_logpaths=('/var/log/nginx/*.access.log' '/var/log/nginx/*.error.log')
+

@@ -1,0 +1,35 @@
+# [DEFAULT] will not overwrite param, if param is setup in jail.conf
+# Ex. nginx-botsearch -> maxretry = 2, which is set in jail.conf
+
+[DEFAULT]
+findtime          = ${f2b_findtime}
+bantime           = ${f2b_bantime}
+maxretry          = ${f2b_maxretry}
+
+## Mail out if some jail banned IP , including whois, log
+## Default: %(action_)s , <--- Just ban IP
+#action = %(action_mwl)s
+
+# Ref. https://github.com/fail2ban/fail2ban/issues/1719#issuecomment-287070769
+# normal (default), ddos, extra or aggressive (combines all)
+#mode="aggressive"  # [ normal | ddos | extra | aggressive ]
+[sshd]
+enabled           = ${sshd_enabled}
+port              = ${sshd_port}
+mode              = ${sshd_mode}
+
+[nginx-limit-req]
+enabled           = ${ng_limit_req_enabled}
+port              = ${ng_limit_req_port}
+#logpath           = /var/log/nginx/*.error.log
+#logpath           = ${ng_limit_req_logpath}
+
+[nginx-botsearch]
+enabled           = ${ng_botsearch_enabled}
+port              = ${ng_botsearch_port}
+
+# use multi-line for logpath
+#logpath           = /var/log/nginx/*.access.log
+#                    /var/log/nginx/*.error.log
+#logpath           = ${ng_botsearch_logpath}
+

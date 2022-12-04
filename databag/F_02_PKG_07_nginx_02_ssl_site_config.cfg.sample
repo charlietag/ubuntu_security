@@ -1,0 +1,17 @@
+# ***************************************************
+# * change your domain name here                    *
+# ***************************************************
+local server_name="myrails.centos8.localdomain"  # ---> ex: mylaravel.centos8.localdomain
+local site_app_name="myrails"                    # ---> ex: mylaravel
+local site_user_name="rubyuser"                  # ---> ex: phpuser
+
+# [ rails | laravel | disable]
+local site_type="disable"
+
+
+# ***************************************************
+# DO NOT MODIFY HERE
+# ***************************************************
+# web root setting
+local web_root="/home/${site_user_name}/${site_type}_sites/${site_app_name}/public"
+

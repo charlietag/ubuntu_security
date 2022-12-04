@@ -1,0 +1,64 @@
+#!/bin/bash
+# CERTBOT_CMD="/opt/certbot/certbot-auto"
+CERTBOT_CMD="certbot"
+RENEW_BEFORE_DAYS=25
+
+VALID_DAYS="$($CERTBOT_CMD certificates 2>/dev/null |grep -Eo "VALID: [0-9]+ days" |awk '{print $2}' |sort -n|head -n 1)"
+if [ -z "${VALID_DAYS}" ]
+then
+  echo "No certs found."
+  exit 1
+fi
+
+
+# ------------------ Check service status ------------------------------
+check_service() {
+  local service_name="$1"
+  local service_status="$(systemctl list-unit-files | grep "enable" | grep "${service_name}")"
+
+  if [[ -z "${service_status}" ]]; then
+    exit
+  fi
+}
+# ------------------ Check service status ------------------------------
+
+
+
+if [ $VALID_DAYS -lt $RENEW_BEFORE_DAYS ]
+then
+
+  rpm --quiet -q certbot || dnf -y install certbot python3-certbot-dns-cloudflare
+  rpm --quiet -q python3-certbot-dns-cloudflare || dnf -y install certbot python3-certbot-dns-cloudflare
+  # --------------------------------------------------
+  # Install certbot using EPEL repo - so ignore here
+  # --------------------------------------------------
+  # echo "============================"
+  # echo " Check for cloudflare"
+  # echo "============================"
+  # echo "---Install dns-cloudflare if needed  ---"
+  # CERTBOT_PYTHON_PIP_CMD="/opt/eff.org/certbot/venv/bin/pip"
+  # IF_CF="$($CERTBOT_PYTHON_PIP_CMD list --format=columns | grep certbot-dns-cloudflare)"
+  # if [[ -z "$IF_CF" ]]; then
+  #   $CERTBOT_PYTHON_PIP_CMD install certbot-dns-cloudflare
+  # else
+  #   echo "Pass..."
+  # fi
+  # --------------------------------------------------
+  #                  END
+  # --------------------------------------------------
+
+
+  echo ""
+  echo "============================"
+  echo " VALID: ${VALID_DAYS} days"
+  echo " Renewing certifcates"
+  echo "============================"
+  $CERTBOT_CMD renew -n
+
+  echo ""
+  check_service "nginx.service"
+  echo "============================"
+  echo " Restarting web server"
+  echo "============================"
+  systemctl restart nginx
+fi
