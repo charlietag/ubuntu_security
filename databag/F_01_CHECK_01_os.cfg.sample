@@ -12,3 +12,6 @@ local os_commands=(
 /usr/bin/killall
 /usr/bin/find
 )
+
+# ubuntu always failed on check command
+# /bin/pidof
