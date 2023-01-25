@@ -1,2 +1,14 @@
 #Put local vars here for the specific function
-local os_commands=(chfn chsh login ls passwd ps top netstat ifconfig killall pidof find)
+local os_commands=(
+/usr/bin/chfn
+/usr/bin/chsh
+/bin/login
+/bin/ls
+/usr/bin/passwd
+/bin/ps
+/usr/bin/top
+/bin/netstat
+/sbin/ifconfig
+/usr/bin/killall
+/usr/bin/find
+)
