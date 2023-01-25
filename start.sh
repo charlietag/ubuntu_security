@@ -38,7 +38,7 @@ fi
 
 
 # --- Define github url for os_pre_lib ---
-OS_PRE_LIB_GITHUB="https://github.com/charlietag/os_preparation_lib.git"
+OS_PRE_LIB_GITHUB="https://github.com/charlietag/ubuntu_preparation_lib.git"
 
 # --- Define filepath ---
 ## also in L_01_filepath.sh ##
@@ -49,7 +49,7 @@ CURRENT_FOLDER="$(dirname "${CURRENT_SCRIPT}")"
 echo "#############################################"
 echo "         Preparing required lib"
 echo "#############################################"
-OS_PRE_LIB="${CURRENT_FOLDER}/../os_preparation_lib"
+OS_PRE_LIB="${CURRENT_FOLDER}/../ubuntu_preparation_lib"
 
 # ### Make sure os_preparation_lib exists correctly ###
 RC=1
