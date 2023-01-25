@@ -1,2 +1,2 @@
 #Put local vars here for the specific function
-local ssh_log_file="/var/log/secure*"
+local ssh_log_file="/var/log/auth.log*"
