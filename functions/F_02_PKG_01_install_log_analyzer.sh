@@ -12,44 +12,50 @@
 # ***************************
 # logwatch
 # ***************************
-dnf install -y logwatch
+apt install -y logwatch
 
 # ***************************
-# logwatch
+# goaccess
 # ***************************
-# -- goaccess does not exist in CentOS8 repos (base, appstream, epel) --
-#dnf install -y goaccess
-
-# -- For Manually install --
-# Move to F_01_ENV_03_basic_01_pkgs.sh (os_preparation)
-rpm --quiet -q GeoIP || dnf -y install GeoIP GeoIP-devel
+#-----------------------------------------------------------------------------------------
+# Install dependency packages (for Manually install)
+#-----------------------------------------------------------------------------------------
+# Move to F_01_ENV_03_basic_01_pkgs_install.sh (ubuntu_preparation)
+local check_geoip="$(dpkg -l geoip-bin 2>/dev/null | grep -E "^ii")"
+test -z "${check_geoip}" && apt install -y geoip-bin geoip-database geoipupdate libgeoip-dev
 
 #-----------------------------------------------------------------------------------------
-# Compile and install goaccess
+# Compile to install goaccess
 #-----------------------------------------------------------------------------------------
-dnf install -y goaccess
-# cd $TMP
-#
-# local goaccess_script="/usr/local/bin/goaccess"
-# local goaccess_url="https://github.com/allinurl/goaccess/archive/v${goaccess_ver}.tar.gz"
-#
-# # Download source code
-# wget $goaccess_url -O - | tar -xz
-#
-# # Compile bin file
-# cd goaccess-${goaccess_ver}
-# autoreconf -fiv
-# ./configure --enable-utf8 --enable-geoip=legacy
-# make
-# cp goaccess ${goaccess_script}
-#
-# # Delete source code
-# cd $TMP
-# SAFE_DELETE "goaccess-${goaccess_ver}"
+if [[ -n "${compile_enable}" ]] && [[ "${compile_enable}" = "yes" ]] ; then
+  # ---- compile ---
+  cd $TMP
 
+  local goaccess_script="/usr/local/bin/goaccess"
+  local goaccess_url="https://github.com/allinurl/goaccess/archive/v${compile_goaccess_ver}.tar.gz"
 
+  # Download source code
+  wget $goaccess_url -O - | tar -xz
 
+  # Compile bin file
+  cd goaccess-${compile_goaccess_ver}
+  autoreconf -fiv
+  ./configure --enable-utf8 --enable-geoip=legacy
+  make
+  cp goaccess ${goaccess_script}
 
+  # Delete source code
+  cd $TMP
+  SAFE_DELETE "goaccess-${compile_goaccess_ver}"
+  # ---- compile end ---
+
+else
+  #-----------------------------------------------------------------------------------------
+  # Install goaccess through apt-get
+  #-----------------------------------------------------------------------------------------
+  apt install -y goaccess
+
+fi
 
 
 # ***************************
@@ -57,7 +63,7 @@ dnf install -y goaccess
 # ref. http://www.postfix.org/addon.html#logfile
 # ***************************
 # The same function as what logwatch does
-#dnf install -y postfix-perl-scripts
+#apt install -y pflogsumm
 #sed -i /pflogsumm/d /etc/crontab
 #echo "01 01 * * * root /usr/sbin/pflogsumm -d yesterday /var/log/maillog" >> /etc/crontab
 

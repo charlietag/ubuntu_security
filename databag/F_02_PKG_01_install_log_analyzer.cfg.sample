@@ -1,10 +1,15 @@
 # -----------------------------
 # Do or Not do log_analyzer setup
 # -----------------------------
+# Include "logwatch" + "goaccess"
+
 # [ enable | disable ]
 local this_script_status="disable"
 
-# If this script is enabled,
-# the following setup will be used
-# goaccess tool version
-local goaccess_ver="1.3"
+# --------------------
+# compile goaccess
+# --------------------
+# If this script is enabled, and want to install through compiling from source
+
+# local compile_enable="no"
+# local compile_goaccess_ver="1.7"
