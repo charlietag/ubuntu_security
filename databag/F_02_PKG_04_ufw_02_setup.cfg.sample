@@ -1,0 +1,16 @@
+# -----------------------------
+# Do or Not do ufw setup
+# -----------------------------
+# [ enable | disable ]
+local this_script_status="disable"
+
+#Put local vars here for the specific function
+
+# set allowed known ports of services
+local ufw_allow_known_services=(http https)
+
+# set allowed customized ports.
+#   like default ssh port from 22 to 2222
+#   ex.
+#local ufw_allow_customized_ports=(2222/tcp 5555/tcp)
+local ufw_allow_customized_ports=(2222/tcp)
