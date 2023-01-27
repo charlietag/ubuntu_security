@@ -41,6 +41,13 @@ sed -re '/IPV6/ s/yes/no/g' -i /etc/default/ufw
 # ----- Make sure to allow ssh traffic before enabling ufw, avoiding disrupting existing ssh connections ---
 # Setup allowed incoming traffic
 echo "========================================="
+echo "      Resetting all rules to installed defaults"
+echo "========================================="
+ufw disable
+ufw --force reset
+ufw status verbose
+
+echo "========================================="
 echo "      Allowing incoming "
 echo "========================================="
 for ufw_allow_known_service in ${ufw_allow_known_services[@]}
