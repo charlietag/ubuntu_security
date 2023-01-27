@@ -67,9 +67,15 @@ echo "--------------Firewall(ufw) Rules-------------"
 # verbose - display rules including **default setting (DROP input, ACCEPT output)**
 ufw status verbose
 
+# --------------
+# ufw - allow vs limit
+# --------------
+# ufw allow ssh -> allow ssh port 22/tcp
+# ufw limit ssh -> alow ssh port 22/tcp + connection established > 6 times (in 30 seconds) block
+#   ---> this block is not permanent, after restart ufw , all gone, so use fail2ban instead this feature
 
 # --------------
-# Sample (ufw status numbered)
+# ufw status numbered (sample)
 # --------------
 # This is easier to delete rules
 # ufw status numbered
