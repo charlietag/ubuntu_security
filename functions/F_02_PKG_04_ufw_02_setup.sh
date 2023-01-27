@@ -79,7 +79,7 @@ ufw status verbose
 # --------------
 # ufw allow ssh -> allow ssh port 22/tcp
 # ufw limit ssh -> alow ssh port 22/tcp + connection established > 6 times (in 30 seconds) block
-#   ---> this block is not permanent, after restart ufw , all gone, so use fail2ban instead this feature
+#   ---> this block is not permanent, after restart ufw , all gone, and not useful in NAT world(multi user login to the same server), so use fail2ban instead this feature
 
 # --------------
 # ufw status numbered (sample)
