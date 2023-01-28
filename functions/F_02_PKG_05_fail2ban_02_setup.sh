@@ -67,7 +67,7 @@ sleep 2
 
 
 echo "---starting firewalld---"
-systemctl start firewalld
+ufw --force enable
 
 sleep 2
 
@@ -91,8 +91,9 @@ fi
 
 systemctl start fail2ban
 
-echo "---enable firewalld---"
-systemctl enable firewalld.service
+echo "---enable firewall (ufw), should be enabled by previous step, enable it again---"
+systemctl enable ufw.service
+
 echo "---enable fail2ban---"
 systemctl enable fail2ban.service
 
@@ -105,8 +106,8 @@ sleep 2
 #--------------------------------------
 # Make sure firewalld works with fail2ban well
 #--------------------------------------
-echo "--------------Firewalld Rules-------------"
-firewall-cmd --list-all
+echo "--------------Firewall(ufw) Rules-------------"
+ufw status verbose
 
 echo "--------------Fail2ban Status-------------"
 fail2ban-client status
