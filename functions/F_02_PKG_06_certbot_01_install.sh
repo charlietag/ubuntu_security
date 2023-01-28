@@ -11,7 +11,7 @@
 
 
 # --------------------------------------------------
-# Install certbot using EPEL repo - so ignore here
+# Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
 # Init action
 # . ${PLUGINS}/plugin_certbot_path.sh
@@ -21,11 +21,12 @@
 
 
 #**********************************************
+pkg_certbot_check="$(dpkg -l certbot 2>/dev/null | grep -E "^ii")"
 
-rpm --quiet -q certbot || dnf -y install certbot python3-certbot-dns-cloudflare
+test -z "${pkg_certbot_check}" && apt install -y certbot python3-certbot-dns-cloudflare
 
 # --------------------------------------------------
-# Install certbot using EPEL repo - so ignore here
+# Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
 # ******* Download certbot *******
 # if [ -d $certbot_path ]
@@ -40,8 +41,8 @@ rpm --quiet -q certbot || dnf -y install certbot python3-certbot-dns-cloudflare
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------
 # To avoid interactive prompt interrupts the installation
-#   --quiet , not just silence mode , but also force "dnf install -y packages"
-#   not just command with--quiet forces "dnf install -y packages", while "certbot renew" will also force "dnf install -y packages"
+#   --quiet , not just silence mode , but also force "apt install -y packages"
+#   not just command with--quiet forces "apt install -y packages", while "certbot renew" will also force "apt install -y packages"
 
 # Before action
 # . ${PLUGINS}/plugin_certbot_install_check.sh
@@ -51,7 +52,7 @@ rpm --quiet -q certbot || dnf -y install certbot python3-certbot-dns-cloudflare
 # --------------------------------------------------
 
 # --------------------------------------------------
-# Install certbot using EPEL repo - so ignore here
+# Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
 # Make sure eff folder exists
 # echo "--- Run list current certificates function to make sure ${certbot_eff_org_path} exists (used by dns-cloudflare, pip install certbot-dns-cloudflare) ---"
@@ -62,7 +63,7 @@ rpm --quiet -q certbot || dnf -y install certbot python3-certbot-dns-cloudflare
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # --------------------------------------------------
-# Install certbot using EPEL repo - so ignore here
+# Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
 # echo "Be sure to disable httpd server..."
 # systemctl disable httpd
