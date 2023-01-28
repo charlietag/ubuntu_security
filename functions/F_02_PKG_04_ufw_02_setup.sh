@@ -74,6 +74,39 @@ echo "--------------Firewall(ufw) Rules-------------"
 # verbose - display rules including **default setting (DROP input, ACCEPT output)**
 ufw status verbose
 
+# -------------------------------------------
+# Ref. https://linuxopsys.com/topics/set-up-firewall-with-ufw-on-ubuntu
+# -------------------------------------------
+# ufw default allow|deny|reject DIRECTION
+#   allow|deny|reject is the permission that you will set
+#   DIRECTION is one of the values: incoming, outgoing, or routed
+# by default it deny all incoming traffics and allows all outgoing traffics.
+
+# In case someone changed the defaults, you need to change back to ufw default: (run commands In ORDER !)
+#   ufw default deny incoming
+#   ufw default allow outgoing
+# -------------------------------------------
+echo "-------------- Check default rules -------------"
+local ufw_status_default="$(ufw status verbose | grep 'Default: deny (incoming), allow (outgoing), disabled (routed)')"
+ufw status verbose | grep 'Default: deny (incoming), allow (outgoing), disabled (routed)'
+
+if [[ -z "${ufw_status_default}" ]]; then
+  # ufw --force reset will do NOTHING about default config
+  echo "Default policies has been changed, change back to ufw default"
+  ufw default deny incoming
+  ufw default allow outgoing
+  # These two default commands changed files: /etc/default/ufw, /etc/ufw/user.rules
+
+  # --- check again ---
+  ufw status verbose | grep 'Default: deny (incoming), allow (outgoing), disabled (routed)'
+
+  echo "--------------Firewall(ufw) Rules again-------------"
+  # verbose - display rules including **default setting (DROP input, ACCEPT output)**
+  ufw status verbose
+  # --- check again ---
+fi
+
+
 # --------------
 # ufw - allow vs limit
 # --------------
