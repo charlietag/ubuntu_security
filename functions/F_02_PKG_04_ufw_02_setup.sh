@@ -43,7 +43,7 @@ sed -re '/IPV6/ s/yes/no/g' -i /etc/default/ufw
 echo "========================================="
 echo "      Resetting all rules to installed defaults"
 echo "========================================="
-ufw disable
+ufw --force disable
 ufw --force reset
 ufw status verbose
 
@@ -64,8 +64,8 @@ do
   ufw allow ${ufw_allow_customized_port}
 done
 
-ufw disable
-ufw enable
+ufw --force disable
+ufw --force enable
 
 # Enable ufw.service
 systemctl enable ufw.service

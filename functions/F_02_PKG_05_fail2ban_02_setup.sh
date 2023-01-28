@@ -53,16 +53,15 @@ echo "========================================="
 task_copy_using_render
 
 #--------------------------------------
-# Start firewalld & fail2ban
+# Start firewall(ufw) & fail2ban
 #--------------------------------------
-# Start and Enable firewalld service
 echo "---stopping fail2ban---"
 systemctl stop fail2ban
 
 sleep 2
 
-echo "---stopping firewalld---"
-systemctl stop firewalld
+echo "---stopping firewall (ufw)---"
+ufw --force disable
 
 sleep 2
 
