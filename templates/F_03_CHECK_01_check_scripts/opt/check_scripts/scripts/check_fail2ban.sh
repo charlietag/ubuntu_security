@@ -45,8 +45,7 @@ test_fail2ban_config_status() {
 #     This means this is the first time to start fail2ban, which needs to be initialized.
 #     This will be solved after first time run this script (fail2ban-client set {jail_name} banip 10.255.255.254)
 #
-# 20200525
-# CentoOS 8 is using nft rules instead.
+# Ubuntu 22 is using nft rules instead.
 # ----------
 test_f2b() {
   local f2b_ban_jail="${1}"
