@@ -630,3 +630,6 @@ Table of Contents
   * tag: v1.0.2
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.1...v1.0.2
       * Fix crontab for postfix
+  * tag: v1.0.3
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.2...v1.0.3
+      * Add atop
