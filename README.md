@@ -23,8 +23,9 @@ Table of Contents
   * [GoAccess usage](#goaccess-usage)
   * [Logwatch usage](#logwatch-usage)
 - [Performance monitor](#performance-monitor)
-  * [Iotop usage](#iotop-usage)
   * [Glances usage](#glances-usage)
+  * [Iotop usage](#iotop-usage)
+  * [dstat usage](#dstat-usage)
 - [CHANGELOG](#changelog)
 
 # Purpose
@@ -64,7 +65,7 @@ Table of Contents
   * Download and run check
 
     ```bash
-    dnf install -y git
+    apt install -y git
     git clone https://github.com/charlietag/ubuntu_security.git
     ```
 
@@ -98,7 +99,7 @@ Table of Contents
       ```bash
       databag/
       ├── F_02_PKG_01_install_log_analyzer.cfg
-      ├── F_02_PKG_04_firewall (ufw)_02_setup.cfg (rementer add customized port for dev, like 8000 for laravel, 3000 for rails)
+      ├── F_02_PKG_04_ufw_02_setup.cfg (rementer add customized port for dev, like 8000 for laravel, 3000 for rails)
       ├── F_02_PKG_05_fail2ban_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_03_nginx_check_banned.cfg
       ├── F_02_PKG_07_nginx_01_ssl_enhanced.cfg
@@ -204,7 +205,7 @@ Table of Contents
   ```
 
 * Check OS
-  * Verify os basic command (ls,cp, etc..) using command "rpm -Vf"
+  * Verify os basic command (ls,cp, etc..) using `/var/lib/dpkg/info/$pkg.md5sums` ([F_01_CHECK_01_os.sh](https://github.com/charlietag/ubuntu_security/blob/main/functions/F_01_CHECK_01_os.sh))`
 * Check failed loging
   * Check failed attempt ssh login
 * Check ssh config
@@ -239,7 +240,7 @@ Table of Contents
 ## Nginx module - ubuntu_preparation
   * limit_req_zone
     * This is installed by default on my *ubuntu_preparation repo*
-      * **[Link](https://github.com/charlietag/ubuntu_preparation/blob/master/templates/F_06_01_setup_nginx_include/opt/nginx/conf/include.d/limit_req_zone.conf)**
+      * **[limit_req_zone.conf](https://github.com/charlietag/ubuntu_preparation/blob/main/templates/F_02_PKG_02_nginx_03_setup_ddos/etc/nginx/include.d/limit_req_zone.conf)**
     * This would prevent your server from **DDOS** attacks.
 
 ## NGINX 3rd Party Modules - ubuntu_security
@@ -312,24 +313,21 @@ Table of Contents
         * Install
 
           ```bash
-          dnf install -y nikto
+          apt install -y nikto
           ```
 
         * Start to scan
           ```bash
-          nikto -h myrails.centos8.localdomain
+          nikto -h myrails.ubuntu22.localdomain
           ```
 
       * skipfish
-        * Install
-
-          ```bash
-          dnf install -y skipfish
-          ```
+        * How to use
+          * https://github.com/spinkham/skipfish/wiki/How-To-Use
 
         * Start to scan (output_result_folder must be an empty folder)
           ```bash
-          skipfish -o output_result_folder http://myrails.centos8.localdomain
+          skipfish -o output_result_folder http://myrails.ubuntu22.localdomain
           ```
 
 ## Firewall(ufw) usage
@@ -337,46 +335,29 @@ Table of Contents
 * Allow/revoke specific service
 
   ```basn
-  firewall-cmd --add-service=http --permanent
-  firewall-cmd --remore-service=http --permanent
+  ufw allow http
+  ufw delete allow http
   ```
 
 * Allow/revoke specific port
 
   ```bash
-  firewall-cmd --add-port=2222/tcp --permanent
-  firewall-cmd --remove-port=2222/tcp --permanent
+  ufw allow 2222/tcp
+  ufw delete allow 2222/tcp
   ```
 
 * List all current rules setting
 
   ```bash
-  firewall-cmd --list-all
+  ufw status verbose
   ```
 
-* After setup done with argument "**--permanent**", all rules save into the following file by default
-
-  ```bash
-  /etc/firewall (ufw)/zone/public.xml
-  ```
-
-* So reload firewall (ufw) to activate setting.
-  ```bash
-  firewall-cmd --reload
-  ```
-
-* Services(http,https) defines in
-
-  ```bash
-  /usr/lib/firewall (ufw)/services/*
-  ```
-
-* After running this installation, your firewall (ufw) will only allow http , https , ***customized ssh port***
+* After running this installation, your firewall(ufw) will only allow http , https , ***customized ssh port***
 
 ## Fail2ban usage
-*- Setting: port, in fail2ban configuration is based on firewall (ufw) services name.*
+*- Setting: port, in fail2ban configuration is based on firewall(ufw) services name.*
 
-*- Determine if rules of fail2ban is inserted into nft via firewall (ufw) command*
+*- Determine if rules of fail2ban is inserted into nft via firewall(ufw) command*
 
   * Confirm fail2ban works with **nft** well
 
@@ -449,31 +430,10 @@ Table of Contents
 
   ```bash
   systemctl stop fail2ban
-  systemctl stop firewall (ufw)
-  systemctl start firewall (ufw)
+  ufw disable
+  ufw enable
   systemctl start fail2ban
   ```
-
-- The following flow are executed automatically by **Fail2ban**
-  * Create [ipset-nmae] *(What actually done behind)*
-
-      ```bash
-      ipset create <ipmset> hash:ip timeout <bantime>
-      ```
-
-  * Reject all traffic with [ipset-name] *(What actually done behind)*
-
-      ```bash
-      firewall-cmd --direct --add-rule <family> filter <chain> 0 -p <protocol> -m multiport --dports <port> -m set --match-set <ipmset> src -j <blocktype>
-      ```
-
-  * Parse log
-  * **Found** illigal IP
-  * **Ban** IP using **ipset** with timeout argument *(What actually done behind)*
-
-      ```bash
-      ipset add <ipmset> <ip> timeout <bantime> -exist
-      ```
 
 # Quick Note - Fail2ban all detailed status
 * *List all jail detailed status in faster way*
@@ -492,7 +452,7 @@ Table of Contents
     |- Filter
     |  |- Currently failed: 0
     |  |- Total failed:     0
-    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.centos8.localdomain.error.log /var/log/nginx/myrails.centos8.localdomain.error.log /var/log/nginx/mylaravel.centos8.localdomain.error.log
+    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.ubuntu22.localdomain.error.log /var/log/nginx/myrails.ubuntu22.localdomain.error.log /var/log/nginx/mylaravel.ubuntu22.localdomain.error.log
     `- Actions
        |- Currently banned: 1
        |- Total banned:     1
@@ -503,7 +463,7 @@ Table of Contents
     |- Filter
     |  |- Currently failed: 0
     |  |- Total failed:     0
-    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.centos8.localdomain.error.log /var/log/nginx/myrails.centos8.localdomain.error.log /var/log/nginx/mylaravel.centos8.localdomain.error.log
+    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.ubuntu22.localdomain.error.log /var/log/nginx/myrails.ubuntu22.localdomain.error.log /var/log/nginx/mylaravel.ubuntu22.localdomain.error.log
     `- Actions
        |- Currently banned: 1
        |- Total banned:     1
@@ -514,7 +474,7 @@ Table of Contents
     |- Filter
     |  |- Currently failed: 0
     |  |- Total failed:     1
-    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.centos8.localdomain.error.log /var/log/nginx/myrails.centos8.localdomain.error.log /var/log/nginx/mylaravel.centos8.localdomain.error.log
+    |  `- File list:        /var/log/nginx/error.log /var/log/nginx/default.error.log /var/log/nginx/redmine.ubuntu22.localdomain.error.log /var/log/nginx/myrails.ubuntu22.localdomain.error.log /var/log/nginx/mylaravel.ubuntu22.localdomain.error.log
     `- Actions
        |- Currently banned: 1
        |- Total banned:     1
@@ -561,51 +521,51 @@ Table of Contents
   * Sign certificate (**RECOMMEND**), verified by DNS txt record
 
     ```bash
-    certbot-auto --agree-tos -m $certbot_email --no-eff-email certonly --manual --preferred-challenges dns -d {domain}
+    certbot --agree-tos -m $certbot_email --no-eff-email certonly --manual --preferred-challenges dns -d {domain}
     ```
 
   * Sign certificate , verified by web server root
 
     ```bash
-    certbot-auto --agree-tos -m $certbot_email --no-eff-email certonly --webroot -w /{PATH}/laravel/public -d {domain} -n
+    certbot --agree-tos -m $certbot_email --no-eff-email certonly --webroot -w /{PATH}/laravel/public -d {domain} -n
     ```
 
   * Display all certificates
 
     ```bash
-    certbot-auto certificates
+    certbot certificates
     ```
 
   * Renew all certificates
 
     ```bash
-    certbot-auto renew
+    certbot renew
     ```
 
   * Revoke and delete certificate
 
     ```bash
-    certbot-auto revoke --cert-path /etc/letsencrypt/live/{domain}/cert.pem
-    certbot-auto delete --cert-name {domain}
+    certbot revoke --cert-path /etc/letsencrypt/live/{domain}/cert.pem
+    certbot delete --cert-name {domain}
     ```
 
   * New site - url : gen nginx site config + apply letsencrypt ssl only
 
     ```bash
-    ./start.sh -i F_02_PKG_06_nginx_02_ssl_site_config
+    ./start.sh -i F_02_PKG_07_nginx_02_ssl_site_config
     ```
 
     **Before going on, be sure http port is reachable, otherwise webroot will fail (limitation for webroot verification!)**
 
     ```bash
-    ./start.sh -i F_02_PKG_07_certbot_02_apply_webroot
+    ./start.sh -i F_02_PKG_06_certbot_02_apply_webroot
     ```
 
   * New site - url (wildcard) : gen nginx site config + apply letsencrypt ssl only
 
     ```bash
-    ./start.sh -i F_02_PKG_06_nginx_02_ssl_site_config
-    ./start.sh -i F_02_PKG_07_certbot_02_apply_dns-cloudflare
+    ./start.sh -i F_02_PKG_07_nginx_02_ssl_site_config
+    ./start.sh -i F_02_PKG_06_certbot_02_apply_dns-cloudflare
     ```
 
 # Log analyzer
@@ -633,7 +593,7 @@ Table of Contents
   ```
 
 # Performance monitor
-## Glances usage (not installed by default, not provide by CentOS 8 - base,epel,appstream)
+## Glances usage
   *- Just like command "top", but more than that.*
 
   ```bash
@@ -645,6 +605,13 @@ Table of Contents
 
   ```bash
   iotop
+  ```
+
+## dstat usage
+  *- Just like command "top", but just for IO.*
+
+  ```bash
+  dstat
   ```
 
 # CHANGELOG
