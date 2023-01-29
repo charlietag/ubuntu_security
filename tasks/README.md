@@ -1,5 +1,5 @@
-# CentOS Linux Server OS Preparation Tasks
+# Ubuntu Linux Server Ubuntu Preparation Tasks
 
-* This move to os_preparation_lib
+* This move to ubuntu_preparation_lib
   * Please reference:
-    * https://github.com/charlietag/os_preparation_lib/tree/master/tasks
+    * https://github.com/charlietag/ubuntu_preparation_lib/tree/main/tasks

@@ -18,7 +18,7 @@ print_msg (){
     echo -n -e '\033[00m'
 
     echo "This might cause fail2ban WARNING !"
-    echo "Ref. https://github.com/charlietag/os_security#fail2ban-usage"
+    echo "Ref. https://github.com/charlietag/ubuntu_security#fail2ban-usage"
 
   else
     echo -ne '\e[1;32m'

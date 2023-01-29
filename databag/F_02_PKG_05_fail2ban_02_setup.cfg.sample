@@ -26,7 +26,7 @@ local f2b_maxretry="5"
 # set this value to 10 days
 # local f2b_bantime="864000"
 
-# CentOS8 use nft (instead of iptables+ipset)
+# Ubuntu uses nft (instead of iptables+ipset)
 # nft works fine with this limit
 local f2b_bantime="2592000"
 
