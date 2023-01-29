@@ -50,13 +50,13 @@ Table of Contents
   * (**Nginx) is needed** when **TLS (certbot) certificates is required**
 
     ```bash
-    echo "mariadb php-fpm puma" | sed 's/ /\n/g' | xargs -i bash -c "echo --- Stop / Disable {} ---; systemctl stop {} ; systemctl disable {}; echo"
+    systemctl list-unit-files |grep -E 'mariadb\.service|php[[:print:]]*fpm\.service|puma[[:print:]]*\.service' | awk '{print $1}' | xargs | xargs -I{} bash -c "echo --- Stop and Disable {} ---; systemctl stop {} ; systemctl disable {}; echo"
     ```
 
   * **Nginx is not needed**, when **NO TLS certificates** required
 
     ```bash
-    echo "mariadb php-fpm puma nginx" | sed 's/ /\n/g' | xargs -i bash -c "echo --- Stop / Disable {} ---; systemctl stop {} ; systemctl disable {}; echo"
+    systemctl list-unit-files |grep -E 'mariadb\.service|php[[:print:]]*fpm\.service|puma[[:print:]]*\.service|nginx\.service' | awk '{print $1}' | xargs | xargs -I{} bash -c "echo --- Stop and Disable {} ---; systemctl stop {} ; systemctl disable {}; echo"
     ```
 
 # Quick Install
