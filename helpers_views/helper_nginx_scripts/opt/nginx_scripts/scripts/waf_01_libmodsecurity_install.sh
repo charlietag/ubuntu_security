@@ -26,15 +26,15 @@ start_script
 echo "------------------------------------"
 echo "Remove packages which might be conflicted with manually compiled libmodsecurity"
 echo "------------------------------------"
-rpm -qa | grep mod_security > /dev/null && dnf remove -y mod_security*
 
-dnf install -y libcurl libcurl-devel yajl yajl-devel libxml2 libxml2-devel ssdeep ssdeep-devel lua lua-devel lmdb lmdb-devel lmdb-libs GeoIP GeoIP-devel
+pkg_modsecurity_check="$(dpkg -l | grep libmodsecurity 2>/dev/null | grep -E "^ii" | awk '{print $2}' | xargs)"
+test -n "${pkg_modsecurity_check}" && apt autoremove --purge -y ${pkg_modsecurity_check}
+
+apt install -y git g++ apt-utils autoconf automake build-essential libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2-dev libyajl-dev pkgconf wget zlib1g-dev
 
 # ------------------------------------
 # Install libmodsecurity (ModSecurity for Nginx)
 # ------------------------------------
-#dnf install -y libmodsecurity*
-
 echo " ------------------------------------"
 echo " Install libmodsecurity (Manually compile libmodsecurity - Modsecurity for Nginx)"
 echo " ------------------------------------"
@@ -59,7 +59,7 @@ cd ${MODSEC_SRC_PATH}
 make -s || { echo "FATAL: make" ; exit 1; }
 make -s install || { echo "FATAL: make install" ; exit 1; }
 
-echo 
+echo ""
 
 # ***********************************************************************************************************
 

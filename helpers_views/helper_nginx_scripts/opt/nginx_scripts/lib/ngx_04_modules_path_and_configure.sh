@@ -41,7 +41,7 @@ ngx_parse_and_configure_module () {
     # --- with-compat ---
 
     # -----------------------------------------------------------------------------------------------------------
-    # Failed , while install Nginx from AppStream becaulse no --with-compat in argv (nginx -V 2>&1 | grep compat)
+    # Failed , while install Nginx from OS repo becaulse no --with-compat in argv (nginx -V 2>&1 | grep compat)
     # -----------------------------------------------------------------------------------------------------------
     # => is not binary compatible
     ./configure --with-compat --add-dynamic-module=${ngx_dynamic_module_folder}
@@ -50,7 +50,7 @@ ngx_parse_and_configure_module () {
     # --- no with-compat ---
 
     # -----------------------------------------------------------------------------------------------------------
-    # Change for installing Nginx using AppStream
+    # Change for installing Nginx using OS repo
     # -----------------------------------------------------------------------------------------------------------
     # --- parse out nginx configure arguments ---
     # Ref. https://serverfault.com/questions/223509/how-can-i-see-which-flags-nginx-was-compiled-with

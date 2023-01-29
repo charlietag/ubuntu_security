@@ -42,12 +42,12 @@ wget $NGX_HEADERS_URL -O - | tar -xz
 cd ${NGX_SRC_PATH}
 
 # -----------------------------------------------------------------------------------------------------------
-# Change for installing Nginx using AppStream
+# Change for installing Nginx using OS repo
 # -----------------------------------------------------------------------------------------------------------
 ngx_parse_and_configure_module "headers-more-nginx-module-${PARAM_NGX_HEADERS_MORE_VER/v}"
 
 # -----------------------------------------------------------------------------------------------------------
-# Failed , while install Nginx from AppStream becaulse no --with-compat in argv (nginx -V 2>&1 | grep compat)
+# Failed , while install Nginx from OS repo becaulse no --with-compat in argv (nginx -V 2>&1 | grep compat)
 # -----------------------------------------------------------------------------------------------------------
 # => is not binary compatible
 #./configure --with-compat --add-dynamic-module=../headers-more-nginx-module-${PARAM_NGX_HEADERS_MORE_VER/v}
