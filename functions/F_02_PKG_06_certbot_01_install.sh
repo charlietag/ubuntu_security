@@ -65,9 +65,9 @@ test -z "${pkg_certbot_check}" && apt install -y certbot python3-certbot-dns-clo
 # --------------------------------------------------
 # Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
-# echo "Be sure to disable httpd server..."
-# systemctl disable httpd
-# systemctl stop httpd
+# echo "Be sure to disable apache server..."
+# systemctl disable apache2.service
+# systemctl stop apache2.service
 
 # ******* Check certbot, determine if git clone success*******
 # echo "---Determining git status of CERTBOT---"

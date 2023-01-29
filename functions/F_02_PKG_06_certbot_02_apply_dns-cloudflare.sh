@@ -9,15 +9,18 @@
 [[ "${certbot_apply_action}" != "dns-cloudflare" ]] && eval "${SKIP_SCRIPT}"
 # ------------------------------------
 
+
 # Init action
 . ${PLUGINS}/plugin_certbot_path.sh
 # Before action
 . ${PLUGINS}/plugin_certbot_install_check.sh
 #**********************************************
 
-rpm --quiet -q python3-certbot-dns-cloudflare || dnf -y install certbot python3-certbot-dns-cloudflare
+pkg_certbot_check="$(dpkg -l python3-certbot-dns-cloudflare 2>/dev/null | grep -E "^ii")"
+
+test -z "${pkg_certbot_check}" && apt install -y certbot python3-certbot-dns-cloudflare
 # --------------------------------------------------
-# Install certbot using EPEL repo - so ignore here
+# Install certbot using apt official repo - so ignore here
 # --------------------------------------------------
 # if [[ ! -d "${certbot_eff_org_path}" ]]; then
 #   echo "--- Run list current certificates function to make sure ${certbot_eff_org_path} exists (used by dns-cloudflare, pip install certbot-dns-cloudflare) ---"
