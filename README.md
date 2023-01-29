@@ -10,8 +10,8 @@ Table of Contents
   * [Basic os check](#basic-os-check)
 - [Installed Packages](#installed-packages)
 - [Quick Note - Package](#quick-note---package)
-  * [Nginx module - os_preparation](#nginx-module---os_preparation)
-  * [Firewalld usage](#firewalld-usage)
+  * [Nginx module - ubuntu_preparation](#nginx-module---ubuntu_preparation)
+  * [Firewall(ufw) usage](#firewall-ufw--usage)
   * [Fail2ban usage](#fail2ban-usage)
 - [Quick Note - Fail2ban flow](#quick-note---fail2ban-flow)
 - [Quick Note - Fail2ban all detailed status](#quick-note---fail2ban-all-detailed-status)
@@ -28,35 +28,24 @@ Table of Contents
 - [CHANGELOG](#changelog)
 
 # Purpose
-**This presumes that you've done with** [os_preparation](https://github.com/charlietag/os_preparation)
+**This presumes that you've done with** [ubuntu_preparation](https://github.com/charlietag/ubuntu_preparation)
 1. This is used for check if your linux server is being hacked.
-1. This could also help you to enhance your servers' security with **firewalld** and **fail2ban**.
+1. This could also help you to enhance your servers' security with **firewall (ufw)** and **fail2ban**.
 1. This is also designed for **PRODUCTION** single server, which means this is suit for small business.
 
 # Supported Environment
-  * CentOS Stream release 9
-    * os_preparation
-      * release : `master` `v3.x.x`
+  * Ubuntu 22.04
+    * ubuntu_security
+      * release : `main` `v1.x.x`
 
-  * CentOS Stream release 8
-    * os_preparation
-      * release : `v2.x.x`
-
-  * CentOS 8 (8.x)
-    * os_preparation
-      * release : `v1.x.x`
-
-  * CentOS 7 (7.x) **(deprecated)**
-    * os_preparation
-      * release : `v0.x.x`
 
 # Warning
 * If you found something is weired and not sure if you've been hacked.  You'd better reinstall your server.
-* ClamAV (clamscan) - if you're going to scan virus through clamscan (ClamAV), which is installed by default ([os_security](https://github.com/charlietag/os_security))
+* ClamAV (clamscan) - if you're going to scan virus through clamscan (ClamAV), which is installed by default ([ubuntu_security](https://github.com/charlietag/ubuntu_security))
   * `clamscan` is a **memory monster**
   * RAM (Physical + SWAP) Capacity recommendations for clamscan (ClamAV): **>= 4GB**
   * (Tip) mkswap if RAM is insufficient to run clamscan
-    * [os_preparation#SWAP_FILE](https://github.com/charlietag/os_preparation#warning)
+    * [ubuntu_preparation#SWAP_FILE](https://github.com/charlietag/ubuntu_preparation#warning)
 * If your ***physical memory is <= 1GB***, be sure stop some service before getting started
   * (**Nginx) is needed** when **TLS (certbot) certificates is required**
 
@@ -76,7 +65,7 @@ Table of Contents
 
     ```bash
     dnf install -y git
-    git clone https://github.com/charlietag/os_security.git
+    git clone https://github.com/charlietag/ubuntu_security.git
     ```
 
   * Make sure config files exists , you can copy from sample to **modify**.
@@ -98,18 +87,18 @@ Table of Contents
         ├── F_01_CHECK_03_last_login
         ├── F_01_CHECK_04_ssh_config
         ├── F_02_PKG_02_install_perf_tools
-        ├── F_02_PKG_04_firewalld_01_install
+        ├── F_02_PKG_04_firewall (ufw)_01_install
         ├── F_02_PKG_05_fail2ban_01_install
         ```
 
     * **DEV** use (server in **Cloud**)
       * It would be better to work with **VPS Firewall** for more secure enviroment
-        * Firewalld + Fail2ban + **VPS Firewall (Vultr / DigitalOcean)**
+        * Firewall(ufw) + Fail2ban + **VPS Firewall (Vultr / DigitalOcean)**
 
       ```bash
       databag/
       ├── F_02_PKG_01_install_log_analyzer.cfg
-      ├── F_02_PKG_04_firewalld_02_setup.cfg (rementer add customized port for dev, like 8000 for laravel, 3000 for rails)
+      ├── F_02_PKG_04_firewall (ufw)_02_setup.cfg (rementer add customized port for dev, like 8000 for laravel, 3000 for rails)
       ├── F_02_PKG_05_fail2ban_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_03_nginx_check_banned.cfg
       ├── F_02_PKG_07_nginx_01_ssl_enhanced.cfg
@@ -138,7 +127,7 @@ Table of Contents
       databag/
       ├── _certbot.cfg
       ├── F_02_PKG_01_install_log_analyzer.cfg
-      ├── F_02_PKG_04_firewalld_02_setup.cfg
+      ├── F_02_PKG_04_firewall (ufw)_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_03_nginx_check_banned.cfg
       ├── F_02_PKG_07_nginx_01_ssl_enhanced.cfg
@@ -188,12 +177,12 @@ Table of Contents
     ```
 
 ## Installation
-* First time finish [os_preparation](https://github.com/charlietag/os_preparation), be sure to do a **REBOOT**, before installing [os_security](https://github.com/charlietag/os_security)
+* First time finish [ubuntu_preparation](https://github.com/charlietag/ubuntu_preparation), be sure to do a **REBOOT**, before installing [ubuntu_security](https://github.com/charlietag/ubuntu_security)
 
 * Run **ALL** to do the following with one command
   * ./start -a
   * Run security check
-  * Install security package "**firewalld**" , "**fail2ban**" , "**letsencrypt**" , "**nginx waf**" , "**nginx header**"
+  * Install security package "**firewall (ufw)**" , "**fail2ban**" , "**letsencrypt**" , "**nginx waf**" , "**nginx header**"
 * ~~To avoid running **ALL**, to **APPLY** and **DESTROY** **letsencrypt** cert **at the same time**.~~
   * ~~DO NOT run ***./start.sh -a***~~
 
@@ -235,7 +224,7 @@ Table of Contents
   ```
 
 # Installed Packages
-* Firewalld
+* Firewall(ufw)
   * Allowed port
     * http
     * https
@@ -247,13 +236,13 @@ Table of Contents
     * nginx-botsearch
 
 # Quick Note - Package
-## Nginx module - os_preparation
+## Nginx module - ubuntu_preparation
   * limit_req_zone
-    * This is installed by default on my *os_preparation repo*
-      * **[Link](https://github.com/charlietag/os_preparation/blob/master/templates/F_06_01_setup_nginx_include/opt/nginx/conf/include.d/limit_req_zone.conf)**
+    * This is installed by default on my *ubuntu_preparation repo*
+      * **[Link](https://github.com/charlietag/ubuntu_preparation/blob/master/templates/F_06_01_setup_nginx_include/opt/nginx/conf/include.d/limit_req_zone.conf)**
     * This would prevent your server from **DDOS** attacks.
 
-## NGINX 3rd Party Modules - os_security
+## NGINX 3rd Party Modules - ubuntu_security
   https://www.nginx.com/resources/wiki/modules/
 
   * Headers More
@@ -343,7 +332,7 @@ Table of Contents
           skipfish -o output_result_folder http://myrails.centos8.localdomain
           ```
 
-## Firewalld usage
+## Firewall(ufw) usage
 *- Default block all traffic, except rules you define below*
 * Allow/revoke specific service
 
@@ -368,10 +357,10 @@ Table of Contents
 * After setup done with argument "**--permanent**", all rules save into the following file by default
 
   ```bash
-  /etc/firewalld/zone/public.xml
+  /etc/firewall (ufw)/zone/public.xml
   ```
 
-* So reload firewalld to activate setting.
+* So reload firewall (ufw) to activate setting.
   ```bash
   firewall-cmd --reload
   ```
@@ -379,15 +368,15 @@ Table of Contents
 * Services(http,https) defines in
 
   ```bash
-  /usr/lib/firewalld/services/*
+  /usr/lib/firewall (ufw)/services/*
   ```
 
-* After running this installation, your firewalld will only allow http , https , ***customized ssh port***
+* After running this installation, your firewall (ufw) will only allow http , https , ***customized ssh port***
 
 ## Fail2ban usage
-*- Setting: port, in fail2ban configuration is based on firewalld services name.*
+*- Setting: port, in fail2ban configuration is based on firewall (ufw) services name.*
 
-*- Determine if rules of fail2ban is inserted into nft via firewalld command*
+*- Determine if rules of fail2ban is inserted into nft via firewall (ufw) command*
 
   * Confirm fail2ban works with **nft** well
 
@@ -456,12 +445,12 @@ Table of Contents
           * `xxx.xxx.xxx.xxx    PTR   web.example.com`
 
 # Quick Note - Fail2ban flow
-* **(Procedure) Be sure to start *"Firewalld / Fail2ban"* in the following order**
+* **(Procedure) Be sure to start *"Firewall(ufw) / Fail2ban"* in the following order**
 
   ```bash
   systemctl stop fail2ban
-  systemctl stop firewalld
-  systemctl start firewalld
+  systemctl stop firewall (ufw)
+  systemctl start firewall (ufw)
   systemctl start fail2ban
   ```
 
@@ -659,188 +648,10 @@ Table of Contents
   ```
 
 # CHANGELOG
-* 2017/03/04
-  * Add Firewalld & Fail2ban installation and setting to avoid DDOS.
-    * Firewalld
-    * Fail2ban
-* 2017/03/18
-  * Integrate ssl and certs into nginx
-    * Using letsencrypt and certbot
-* 2017/03/26
-  * To enhance security, add log analyzer, and enable mail server to mail out alert mail
-    * posfix
-    * goaccess
-    * logwatch (customized for optnginx)
-  * To know more about server performance
-    * iotop
-    * glances
-* 2017/10/20
-  * Add postfix log analyzer - pflogsumm (postfix-perl-scripts)
-* 2017/10/27
-  * Add Nginx http2 (ALPN) support under CentOS 7.4
-  * This change is because openssl version "1.0.2" is supported by default in CentOS 7.4
-* 2018/03/16
-  * Add Letsencrypt wildcard ssl support
-* 2018/07/19
-  * Migrate rails ap server from passenger to puma
-  * This movement will make deployment easier, especial security for most people.
-  * Most different effects
-    * Nginx config file no longer under /opt/nginx. Instead, /etc/nginx
-    * Deprecated command
-      * systemctl start optnginx
-    * New command
-      * systemctl start nginx
-* 2018/12/13
-  * ~~Adding Nginx WAF~~ finished at 2019/08/25
-* 2019/04/07
-  * More tools about server performance
-    * htop
-    * nmon
-    * dstat
-* 2019/08/25
-  * Add Nginx module 'ngx_http_headers_more_filter_module.so' to change server tag ('Server:Nginx' -> 'Server: CustomizedName')
-  * Finished intergrating Nginx WAF module into os_security
-    * Modules
-      * libmodsecurity.so
-      * ngx_http_modsecurity_module.so (ModSecurity-nginx connector)
-    * WAF Policies
-      * OWASP CRS (https://github.com/SpiderLabs/owasp-modsecurity-crs)
-      * COMODO (register free account required: https://waf.comodo.com)
-  * Finished intergrating Nginx WAF with Fail2ban
-    * nginx-modsecurity (modified from apache-modsecurity)
-* 2019/11/20
-  * Add fail2ban rules for redmine (Failed Login)
-* 2019/11/27
-  * Add ClamAV installation and setup
-    * Ref. https://www.clamav.net/
-* 2019/12/06
-  * tag: v0.1.0
-* 2019/12/07
-  * tag: v0.1.1
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.0...v0.1.1
-* 2019/12/11
-  * tag: v0.1.2
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.1...v0.1.2
-    * Fix fail2ban version v0.10 (sshd-ddos is integrated into sshd) issue
-* 2019/12/11
-  * tag: v0.1.3
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.2...v0.1.3
-  * tag: v0.1.4
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.3...v0.1.4
-    * Add check if hostname is in /etc/hosts for fail2ban use
-* 2019/12/22
-  * tag: v0.1.5
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.4...v0.1.5
-    * change default clamav scan path by cron job
-* 2020/01/17
-  * tag: v0.2.0
-    * changelog: https://github.com/charlietag/os_security/compare/v0.1.5...v0.2.0
-    * ssl_protocols TLSv1.2 supported only
-* 2020/06/11
+* 2022/12/04
+  * tag: v0.0.0
+      * Initial Ubuntu Security
+* 2023/01/30
   * tag: v1.0.0
-    * changelog: https://github.com/charlietag/os_security/compare/v0.2.0...v1.0.0
-      * CentOS 8 - changes for CentOS 8
-        * Rename all centos7 related to centos8 in all config files
-        * Command "yum" -> "dnf"
-        * Package: goaccess
-          * Manually compile, because CentOS8 (epel, base, appstream) doesn't provide this package
-        * clamscan
-          * show error message if memroy is insufficient
-        * TLS 1.3 (Nginx) - Enabled by default
-        * ModSecurity
-          * v3.0.3 -> v3.0.4
-        * Nginx WAF Rules - cwaf_charlietag (comodo waf clone for bad stability of cwaf site) by default
-        * iptables -> nft
-          * check_fail2ban.sh
-            * ipset list check -> nft list ruleset check
-        * Fail2ban default bantime
-          * ban IP for 30 days - 2592000
-        * Other changes for CentOS 8 (reference changelog via link above)
-  * tag: v1.0.1
-    * changelog: https://github.com/charlietag/os_security/compare/v1.0.0...v1.0.1
-      * postfix config -> **compatibility_level = 2**
-* 2020/06/11
-  * tag: v1.0.2
-    * changelog: https://github.com/charlietag/os_security/compare/v1.0.1...v1.0.2
-      * small changes for _postfix.cfg
-* 2020/06/14
-  * tag: v1.0.3
-    * changelog: https://github.com/charlietag/os_security/compare/v1.0.2...v1.0.3
-      * DO NOT restart Nginx if Nginx is disabled (Otherwise, sometimes I will be shocked if it's started automatically)
-        * When upgrading Nginx related (WAF / Header / Nginx)
-        * Check banned IP by fail2ban (f2b_nginx_check_banned.sh)
-        * Renew certificates (certbot-auto_renew.sh)
-* 2021/01/30
-  * tag: v2.0.0
-    * changelog: https://github.com/charlietag/os_security/compare/v1.0.3...v2.0.0
-      * install certbot (git clone certbot-auto => dnf install certbot using repo EPEL)
-      * add comment for puma TCP socket in nginx sample ssl config (rails)
-      * make sure http://url is alive before certbot issuing certs via webroot
-      * fix nginx dynamic modules compatibility
-        * fix for installing Nginx via both (nginx.org / AppStream)
-* 2021/02/02
-  * tag: v2.0.1
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.0...v2.0.1
-      * Fixes typo
-      * To avoid failing to start fail2ban, start and stop nginx to make sure log of nginx exists...
-* 2021/02/03
-  * tag: v2.0.2
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.1...v2.0.2
-      * Add more displayed messages while setup fail2ban
-* 2021/02/06
-  * tag: v2.0.3
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.2...v2.0.3
-      * Change for newer version of git
-* 2021/02/07
-  * tag: v2.0.4
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.3...v2.0.4
-      * Few changes for more readable messages
-* 2021/06/22
-  * tag: v2.0.5
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.4...v2.0.5
-      * Fix nginx issue while building plugin "header" "libmodsecurity"
-* 2021/11/01
-  * tag: v2.0.6
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.5...v2.0.6
-      * make sure locale (LC_ALL, LANG) is set to "en_US.UTF-8" to avoid errors while compiling programs
-
-        ```bash
-        export LC_ALL="en_US.UTF-8"
-        export LANG="en_US.UTF-8"
-        ```
-* 2021/11/02
-  * tag: v2.0.7
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.6...v2.0.7
-      * locale (LC_ALL, LANG)
-        * ask user to disable terminal locale setting
-* 2021/11/04
-  * tag: v2.0.8
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.7...v2.0.8
-      * Add Example credentials file using restricted API Token (recommended)
-  * tag: v2.0.9
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.8...v2.0.9
-      * Fix nginx header package download path
-* 2022/02/14
-  * tag: v2.0.10
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.9...v2.0.10
-      * Change default nginx modsecurity upload limit config (Nginx default: 100 MB, set modsecurity rule to 500 MB, non-uploading-file-request to 10 MB)
-
-        ```
-        SecRequestBodyLimit 524288000
-        SecRequestBodyNoFilesLimit 10485760
-        ```
-
-* 2022/04/17
-  * tag: v2.1.0
-    * changelog: https://github.com/charlietag/os_security/compare/v2.0.10...v2.1.0
-      * Refine doc
-        * Do not install packages by default
-          * ClamAV
-            * ~~F_02_PKG_21_install_clamav.cfg~~
-          * Nginx modules (WAF, Nginx more headers)
-            * ~~_nginx_modules.cfg~~
-* 2022/10/11
-  * tag: v3.0.0
-    * changelog: https://github.com/charlietag/os_security/compare/v2.1.0...v3.0.0
-      * Migrate to CentOS Stream 9
-        * goaccess (epel ~~manually compile~~)
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v0.0.0...v1.0.0
+      * First release of ubuntu_security
