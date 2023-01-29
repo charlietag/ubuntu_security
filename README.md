@@ -633,3 +633,6 @@ Table of Contents
   * tag: v1.0.3
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.2...v1.0.3
       * Add atop
+  * tag: v1.0.4
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.3...v1.0.4
+      * fix typo - disabling atop systemd services
