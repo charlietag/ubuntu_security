@@ -26,7 +26,15 @@ sed -i /"${cron_check_script//\//\\/}"/d /etc/crontab
 echo "========================================="
 echo "   Install clamav"
 echo "========================================="
-rpm --quiet -q clamav || dnf install -y clamav clamav-update
+# clamav-cvdupdate - fetch virus database from clamav.net, and self-hosts virus database server use
+# clamav-freshclam - update virus database (from clamav.net)
+
+# clamav contains: clamav clamav-base clamav-freshclam libclamav9
+
+pkg_clamav_check="$(dpkg -l clamav 2>/dev/null | grep -E "^ii")"
+test -z "${pkg_clamav_check}" && apt install -y clamav
+systemctl stop clamav-freshclam.service
+systemctl disable clamav-freshclam.service
 
 echo "========================================="
 echo "   Setup for $(basename ${cron_check_script})"

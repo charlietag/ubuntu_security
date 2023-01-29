@@ -6,6 +6,10 @@ THIS_FILE_CFG="$(echo "${THIS_FILE_NAME}" | sed 's/.sh$//g').cfg"
 
 CLAMAV_CLAMSCAN_DIRS="$(cat ${THIS_FILE_CFG} | grep -v '#' | sed 's/ /\n/g' | sed '/^\s*$/d' | sort -n | uniq)"
 
+# Make sure no freshclam daemon running background
+systemctl stop clamav-freshclam.service
+systemctl disable clamav-freshclam.service 2>/dev/null
+
 # Update virus code
 freshclam --quiet
 
