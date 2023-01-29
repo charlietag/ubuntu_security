@@ -17,6 +17,11 @@ task_copy_using_render_sed
 #--------------------------------------
 # Setup cron mail config
 #--------------------------------------
+# make sure crontab use bash and PATH is correct
+sed -i /SHELL/d /etc/crontab
+sed  '1s/^/SHELL\=\/bin\/bash\n/' -i /etc/crontab
+sed -re 's/^#PATH\=/PATH\=/g' -i /etc/crontab
+
 echo "Setting up crontab..."
 sed -i /MAILTO/d /etc/crontab
 sed -i /MAILFROM/d /etc/crontab
