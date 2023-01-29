@@ -1,7 +1,7 @@
 Table of Contents
 =================
 - [Purpose](#purpose)
-- [Environment](#environment)
+- [Supported Environment](#supported-environment)
 - [Warning](#warning)
 - [Quick Install](#quick-install)
   * [Configuration](#configuration)
@@ -11,6 +11,7 @@ Table of Contents
 - [Installed Packages](#installed-packages)
 - [Quick Note - Package](#quick-note---package)
   * [Nginx module - ubuntu_preparation](#nginx-module---ubuntu_preparation)
+  * [NGINX 3rd Party Modules - ubuntu_security](#nginx-3rd-party-modules---ubuntu_security)
   * [Firewall(ufw) usage](#firewall-ufw--usage)
   * [Fail2ban usage](#fail2ban-usage)
 - [Quick Note - Fail2ban flow](#quick-note---fail2ban-flow)
@@ -22,6 +23,7 @@ Table of Contents
 - [Log analyzer](#log-analyzer)
   * [GoAccess usage](#goaccess-usage)
   * [Logwatch usage](#logwatch-usage)
+  * [pflogsumm usage](#pflogsumm-usage)
 - [Performance monitor](#performance-monitor)
   * [Glances usage](#glances-usage)
   * [Iotop usage](#iotop-usage)
@@ -585,8 +587,8 @@ Table of Contents
   logwatch
   ```
 
-## pflogsumm usage (not installed by default, use logwatch instead)
-  *- View log analysis of postfix.*
+## pflogsumm usage
+  *- View log analysis of postfix. (not installed by default, use logwatch instead)*
 
   ```bash
   /usr/sbin/pflogsumm -d yesterday /var/log/maillog
