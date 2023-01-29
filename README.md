@@ -624,3 +624,6 @@ Table of Contents
   * tag: v1.0.0
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v0.0.0...v1.0.0
       * First release of ubuntu_security
+  * tag: v1.0.1
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.0...v1.0.1
+      * Modified Readme ToC (Table of markdown content)
