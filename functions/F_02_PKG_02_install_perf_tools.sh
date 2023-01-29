@@ -2,6 +2,8 @@
 # enhanced top
 # ***************************
 apt install -y glances htop nmon
+systemctl stop glances.service
+systemctl disable glances.service
 
 # ***************************
 # enhaned iostat
