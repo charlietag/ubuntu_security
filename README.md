@@ -334,7 +334,8 @@ Table of Contents
 
 ## Firewall(ufw) usage
 
-*- ufw vs systemctl
+*- ufw vs systemctl*
+
 * ufw
   * systemctl
     * start - trigger ufw initial procedure
@@ -388,6 +389,7 @@ Table of Contents
 
 
 *- Default block all traffic, except rules you define below*
+
 * Allow/revoke specific service
 
   ```basn
