@@ -90,7 +90,7 @@ Table of Contents
         ├── F_01_CHECK_03_last_login
         ├── F_01_CHECK_04_ssh_config
         ├── F_02_PKG_02_install_perf_tools
-        ├── F_02_PKG_04_firewall (ufw)_01_install
+        ├── F_02_PKG_04_ufw_01_install
         ├── F_02_PKG_05_fail2ban_01_install
         ```
 
