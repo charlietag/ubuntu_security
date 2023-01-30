@@ -130,7 +130,7 @@ Table of Contents
       databag/
       ├── _certbot.cfg
       ├── F_02_PKG_01_install_log_analyzer.cfg
-      ├── F_02_PKG_04_firewall (ufw)_02_setup.cfg
+      ├── F_02_PKG_04_ufw_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_02_setup.cfg
       ├── F_02_PKG_05_fail2ban_03_nginx_check_banned.cfg
       ├── F_02_PKG_07_nginx_01_ssl_enhanced.cfg
