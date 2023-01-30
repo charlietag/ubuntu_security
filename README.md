@@ -695,3 +695,6 @@ Table of Contents
   * tag: v1.0.5
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.4...v1.0.5
       * Add notes about `/etc/default/ufw`
+  * tag: v1.0.6
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.5...v1.0.6
+      * Fix typo - README
