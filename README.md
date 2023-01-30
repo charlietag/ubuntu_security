@@ -12,7 +12,7 @@ Table of Contents
 - [Quick Note - Package](#quick-note---package)
   * [Nginx module - ubuntu_preparation](#nginx-module---ubuntu_preparation)
   * [NGINX 3rd Party Modules - ubuntu_security](#nginx-3rd-party-modules---ubuntu_security)
-  * [Firewall(ufw) usage](#firewall-ufw--usage)
+  * [Firewall(ufw) usage](#firewallufw-usage)
   * [Fail2ban usage](#fail2ban-usage)
 - [Quick Note - Fail2ban flow](#quick-note---fail2ban-flow)
 - [Quick Note - Fail2ban all detailed status](#quick-note---fail2ban-all-detailed-status)
