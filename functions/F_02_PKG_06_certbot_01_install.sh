@@ -25,6 +25,8 @@ pkg_certbot_check="$(dpkg -l certbot 2>/dev/null | grep -E "^ii")"
 
 test -z "${pkg_certbot_check}" && apt install -y certbot python3-certbot-dns-cloudflare
 
+systemctl list-unit-files |grep -Ei "^certbot" | awk '{print $1}' | xargs | xargs -I{} bash -c "systemctl stop {}; systemctl disable {}"
+
 # --------------------------------------------------
 # Install certbot using apt official repo - so ignore here
 # --------------------------------------------------

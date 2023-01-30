@@ -694,3 +694,7 @@ Table of Contents
       * fix typo - disabling atop systemd services
       * Add notes about `/etc/default/ufw`
       * Fix typo - README
+* 2023/01/31
+  * tag: v1.0.5
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.4...v1.0.5
+      * disable certbot renew timer
