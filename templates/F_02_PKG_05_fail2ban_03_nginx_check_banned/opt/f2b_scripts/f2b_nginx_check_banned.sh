@@ -9,7 +9,7 @@ PRE_BANNED_LIST="${THIS_FILE}.banned_list"
 
 #THIS_BANNED_CONTENTS="$(fail2ban-client status redmine | grep -i ip | awk -F':' '{print $2}' | sed 's/ /\n/g' | sed 's/\t//g' | sort -n | uniq)"
 
-# not just redmine failed logged in.  all nginx related fail2ban rules have the same ipset & nginx keep alive issue
+# not just redmine failed logged in.  all nginx related fail2ban rules have the same nft ruleset & nginx keep alive issue
 THIS_BANNED_CONTENTS="$(
                         fail2ban-client status | tail -n 1 | cut -d':' -f2 | sed "s/\s//g" | tr ',' '\n' | \
                         grep "nginx" |xargs -I{} bash -c "fail2ban-client status {} | grep -i ip | awk -F':' '{print \$2}'" | \

@@ -47,6 +47,8 @@ echo "1 0 * * * root ${cron_check_script}" >> /etc/crontab
 #--------------------------------------
 # Rendering fail2ban config
 #--------------------------------------
+ls /etc/fail2ban/jail.d/* 2>/dev/null | xargs rm -f
+
 echo "========================================="
 echo "  Rendering fail2ban configuration"
 echo "========================================="
@@ -60,13 +62,13 @@ systemctl stop fail2ban
 
 sleep 2
 
-echo "---stopping firewall (ufw)---"
+echo "---stopping firewall(ufw)---"
 ufw --force disable
 
 sleep 2
 
 
-echo "---starting firewalld---"
+echo "---starting firewall(ufw)---"
 ufw --force enable
 
 sleep 2
@@ -91,7 +93,7 @@ fi
 
 systemctl start fail2ban
 
-echo "---enable firewall (ufw), should be enabled by previous step, enable it again---"
+echo "---enable firewall(ufw), should be enabled by previous step, enable it again---"
 systemctl enable ufw.service
 
 echo "---enable fail2ban---"
@@ -104,7 +106,7 @@ sleep 2
 #fail2ban-client reload
 
 #--------------------------------------
-# Make sure firewalld works with fail2ban well
+# Make sure firewall(ufw) works with fail2ban well
 #--------------------------------------
 echo "--------------Firewall(ufw) Rules-------------"
 ufw status verbose

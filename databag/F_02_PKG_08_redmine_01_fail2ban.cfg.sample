@@ -11,7 +11,7 @@ local this_script_status="disable"
 #   enabled: true | false
 #
 # Port setting: choose which port to be banned if error found
-#   Leverage firewalld daemon , so use predefined info in firewalld /usr/lib/firewalld/services
+#   Leverage ufw
 #     port   : http | https | ssh | http,https
 #   Customized config
 #     port   : 2222 | 3333 | 2222,3333

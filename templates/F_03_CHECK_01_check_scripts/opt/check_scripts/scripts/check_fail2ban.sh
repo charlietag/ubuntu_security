@@ -81,7 +81,7 @@ test_ban() {
       test_f2b_warning="$(test_f2b "${f2b_jail}" "${test_ban_ip}")"
       if [[ -n "${test_f2b_warning}" ]]; then
         echo "${test_f2b_warning}"
-        echo "Firewalld is not running correctly!"
+        echo "ufw is not running correctly!"
       else
         echo "fail2ban rules added (nft)!"
       fi

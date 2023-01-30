@@ -391,7 +391,7 @@ Table of Contents
     fail2ban-client unban 192.168.1.72 ... 192.168.1.72
     ```
 
-  * List banned ip timeout for specific **JAIL NAME**
+  * List banned ip timeout for specific **JAIL NAME** using `ipset` (**deprecated**)
 
     ```bash
     ipset list fail2ban-nginx-botsearch
