@@ -333,6 +333,59 @@ Table of Contents
           ```
 
 ## Firewall(ufw) usage
+*- ufw vs systemctl
+* ufw
+  * systemctl
+    * start - trigger ufw initial procedure
+      * ufw.conf (enable onboot)
+        * start ufw service
+      * ufw.conf (disable onboot)
+        * do nothing
+    * stop
+      * trigger ufw instance stop, `NOT change` ufw.conf
+    * systemctl enable ufw
+      * trigger ufw initial procedure onboot
+    * systemctl disable ufw
+      * **DO NOT** trigger ufw initial procedure onboot
+  * ufw enable
+    * start ufw instance and `change` ufw.conf (enable onboot)
+  * ufw disable
+    * stop ufw instance and `change` ufw.conf (disable onboot)
+* ufw config default save path (not like firewalld using xml)
+  * /etc/ufw/user.rules
+
+* ufw default (/etc/default/ufw)
+  * Ref. [F_02_PKG_04_ufw_02_setup.sh](https://github.com/charlietag/ubuntu_security/blob/main/functions/F_02_PKG_04_ufw_02_setup.sh)
+  * In case someone changed the defaults, you need to change back to ufw default: (run commands In ORDER !)
+    * `ufw --force reset` will do NOTHING about default config, so do the following again if **NEEDED**
+    * These two default commands changed files: `/etc/default/ufw`, `/etc/ufw/user.rules`
+
+      ```bash
+      ufw default deny incoming
+      ufw default allow outgoing
+      ```
+
+  * ufw status `verbose`
+
+    ```bash
+    root@ubuntu22 (Ubuntu 22.04.1) 04:13:35 /etc/ufw
+    # ufw status verbose
+    Status: active
+    Logging: on (low)
+    Default: deny (incoming), allow (outgoing), disabled (routed)
+    New profiles: skip
+
+    To                         Action      From
+    --                         ------      ----
+    2222                       LIMIT IN    Anywhere
+    443                        ALLOW IN    Anywhere
+    80/tcp                     ALLOW IN    Anywhere
+    2222 (v6)                  LIMIT IN    Anywhere (v6)
+    443 (v6)                   ALLOW IN    Anywhere (v6)
+    80/tcp (v6)                ALLOW IN    Anywhere (v6)
+    ```
+
+
 *- Default block all traffic, except rules you define below*
 * Allow/revoke specific service
 
@@ -636,3 +689,6 @@ Table of Contents
   * tag: v1.0.4
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.3...v1.0.4
       * fix typo - disabling atop systemd services
+  * tag: v1.0.5
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.4...v1.0.5
+      * Add notes about `/etc/default/ufw`
