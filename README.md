@@ -702,3 +702,8 @@ Table of Contents
   * tag: v1.0.6
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.5...v1.0.6
       * Fix nginx waf module error
+  * tag: v1.0.7
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.6...v1.0.7
+      * Remove `atop` `glances` `nmon` `htop`
+      * Make sure `apache2` is **stopped** and **disabled**
+        * `systemctl mask apache2`
