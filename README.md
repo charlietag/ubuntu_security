@@ -698,3 +698,7 @@ Table of Contents
   * tag: v1.0.5
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.4...v1.0.5
       * disable certbot renew timer
+* 2023/02/01
+  * tag: v1.0.6
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.5...v1.0.6
+      * Fix nginx waf module error

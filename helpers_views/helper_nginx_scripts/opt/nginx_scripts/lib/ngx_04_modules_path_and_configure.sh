@@ -5,14 +5,14 @@ set_ngx_module_path_and_mkdir () {
   # --- ngx configure argvs ---
   local ngx_argv_ori="$(nginx -V 2>&1 | grep configure | cut -d':' -f2- | xargs -n1 | grep -v 'dynamic')"
 
-  local ngx_module_path="$(echo -e "${ngx_argv_ori}" |grep 'prefix' | cut -d'=' -f2-)/modules"
+  local ngx_module_path="$(echo -e "${ngx_argv_ori}" |grep 'prefix=' | cut -d'=' -f2-)/modules"
 
 
   # --- check and mkdir ---
   if [[ -n "${NGX_WITH_COMPAT_FOUND}" ]]; then
     # --- with-compat ---
     if [[ ! -e "${ngx_module_path}" ]]; then
-      local ngx_lib_module_path="$(echo -e "${ngx_argv_ori}" |grep 'modules-path' | cut -d'=' -f2-)"
+      local ngx_lib_module_path="$(echo -e "${ngx_argv_ori}" |grep 'modules-path=' | cut -d'=' -f2-)"
 
       echo "ln -s ${ngx_lib_module_path} ${ngx_module_path}"
       ln -s ${ngx_lib_module_path} ${ngx_module_path}
