@@ -31,4 +31,5 @@ echo "Base on your server spec. This might take even \"up to hours\"...!"
 echo "-------------------------------------------------------------"
 test -f /etc/nginx/self_ssl/nginx.key && rm -f /etc/nginx/self_ssl/nginx.key
 test -f /etc/nginx/self_ssl/nginx.crt && rm -f /etc/nginx/self_ssl/nginx.crt
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/self_ssl/nginx.key -out /etc/nginx/self_ssl/nginx.crt
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/self_ssl/nginx.key -out /etc/nginx/self_ssl/nginx.crt \
+  -subj "/C=US/ST=California/L=California/O=Org/CN=localhost"
