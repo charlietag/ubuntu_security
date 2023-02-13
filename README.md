@@ -713,3 +713,6 @@ Table of Contents
   * tag: v1.0.8
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.7...v1.0.8
       * Add nginx default ssl server
+  * tag: v1.0.9
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.8...v1.0.9
+      * Add nginx default ssl server with http2 supported
