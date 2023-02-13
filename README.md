@@ -709,3 +709,7 @@ Table of Contents
   * tag: v1.0.7
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.6...v1.0.7
       * Fix logical error while checking fail2ban config status
+* 2023/02/14
+  * tag: v1.0.8
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.7...v1.0.8
+      * Add nginx default ssl server
