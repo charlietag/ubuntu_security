@@ -410,6 +410,20 @@ Table of Contents
   ufw status verbose
   ```
 
+* List all current rules with number and remove policy easier
+
+  ```bash
+  # ufw status numbered
+  Status: active
+
+       To                         Action      From
+       --                         ------      ----
+  [ 1] 80/tcp                     ALLOW IN    Anywhere
+  [ 2] 443                        ALLOW IN    Anywhere
+
+  # ufw delete 2
+  ```
+
 * After running this installation, your firewall(ufw) will only allow http , https , ***customized ssh port***
 
 ## Fail2ban usage
@@ -719,3 +733,7 @@ Table of Contents
   * tag: v1.0.10
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.9...v1.0.10
       * Nginx self signed ssl generation without prompt
+* 2023/02/14
+  * tag: v1.0.11
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.10...v1.0.11
+      * Refine README doc
