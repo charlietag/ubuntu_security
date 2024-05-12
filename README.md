@@ -683,7 +683,8 @@ Table of Contents
   ```
 
 ## dstat usage
-  *- Start from Ubuntu 24.04. This is a virtual package of `pcp`
+
+  *- Start from Ubuntu 24.04. This is a virtual package of `pcp`*
 
   *- Just like command "top", but just for IO.*
 
