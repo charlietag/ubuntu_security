@@ -17,5 +17,10 @@
 # ***************************
 # pcp vs dstat cannot exist at the same time
 # dstat is easier to use
-apt install -y iotop dstat
+# Ubuntu 22.04
+# apt install -y iotop dstat
 
+# Ubuntu 24.04
+# In Ubuntu 24.04: dstat will be Virtual package of pcp
+# So install dstat, will forced to install pcp, which will contains lots of performance tools and processes like pmlogger, pcproxy, etc.
+apt install -y iotop

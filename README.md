@@ -744,3 +744,6 @@ Table of Contents
   * tag: v2.0.0
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.11...v2.0.0
       * Change tag version to `v2.x.x` for Ubuntu 24.04
+  * tag: v2.0.1
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.0...v2.0.1
+      * Ubuntu 24.04, dstat ---> pcp (pmlogger, pcproxy, etc.). So stop installing dstat by default
