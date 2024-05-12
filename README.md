@@ -37,9 +37,12 @@ Table of Contents
 1. This is also designed for **PRODUCTION** single server, which means this is suit for small business.
 
 # Supported Environment
+  * Ubuntu 24.04
+    * ubuntu_security
+      * release : `main` `v2.x.x`
   * Ubuntu 22.04
     * ubuntu_security
-      * release : `main` `v1.x.x`
+      * release : `v1.x.x`
 
 
 # Warning
@@ -737,3 +740,7 @@ Table of Contents
   * tag: v1.0.11
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.10...v1.0.11
       * Refine README doc
+* 2024/05/12
+  * tag: v2.0.0
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v1.0.11...v2.0.0
+      * Change tag version to `v2.x.x` for Ubuntu 24.04
