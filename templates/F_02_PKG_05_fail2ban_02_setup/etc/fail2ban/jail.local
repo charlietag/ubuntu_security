@@ -28,6 +28,11 @@ port              = ${ng_limit_req_port}
 enabled           = ${ng_botsearch_enabled}
 port              = ${ng_botsearch_port}
 
+#[nginx-bad-request]
+#enabled           = ${ng_botsearch_enabled}
+#port              = ${ng_botsearch_port}
+
+
 # use multi-line for logpath
 #logpath           = /var/log/nginx/*.access.log
 #                    /var/log/nginx/*.error.log
