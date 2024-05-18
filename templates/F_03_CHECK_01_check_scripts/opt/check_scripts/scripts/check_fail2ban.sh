@@ -1,7 +1,7 @@
 test_fail2ban_config_status() {
   local test_ban_ip="${1}"
   local f2b_status="$(fail2ban-client status | tail -n 1 | cut -d':' -f2 | sed "s/\s//g" | tr ',' '\n'|sort -n)"
-  local f2b_config="$(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local |grep -E "\[[^[:space:]]+\]$" | grep -v "DEFAULT" | grep -vE "^#" | sed -re 's/^\[//g' | sed -re 's/\]$//g' | sort -n)"
+  local f2b_config="$(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local 2>/dev/null |grep -E "\[[^[:space:]]+\]$" | grep -v "DEFAULT" | grep -vE "^#" | sed -re 's/^\[//g' | sed -re 's/\]$//g' | sort -n)"
 #  local f2b_iptables="$(iptables -S | grep -Eo "f2b-[^[:space:]]+" | sed 's/f2b-//g' | sort -n )"
 #  local f2b_ipset="$(ipset list | grep -Eo "f2b-[^[:space:]]+" | sed 's/f2b-//g' | sort -n )"
 
@@ -11,7 +11,7 @@ test_fail2ban_config_status() {
 #                    )"
   local f2b_nft="$(nft list ruleset |grep "${test_ban_ip}")"
   local diff_check="$(  diff <(echo "${f2b_status}") <(echo "${f2b_config}")    ; \
-                        diff <(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local | grep -vE '^[[:space:]]*#' | grep -E '\[[[:print:]]+\]' | grep -v 'DEFAULT' | wc -l) <(echo "${f2b_nft}" | wc -l)
+                        diff <(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local 2>/dev/null | grep -vE '^[[:space:]]*#' | grep -E '\[[[:print:]]+\]' | grep -v 'DEFAULT' | wc -l) <(echo "${f2b_nft}" | wc -l)
                     )"
 
   if [[ -n "${diff_check}" ]]; then
@@ -57,7 +57,7 @@ test_f2b() {
 
 test_ban() {
   local test_ban_ip="${1}"
-  local f2b_jails="$(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local |grep -E "\[[^[:space:]]+\]$" | grep -v "DEFAULT" | grep -vE "^#" | sed -re 's/^\[//g' | sed -re 's/\]$//g' | sort -n )"
+  local f2b_jails="$(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local 2>/dev/null |grep -E "\[[^[:space:]]+\]$" | grep -v "DEFAULT" | grep -vE "^#" | sed -re 's/^\[//g' | sed -re 's/\]$//g' | sort -n )"
   local test_f2b_warning
   local test_f2b_warning_found
 
