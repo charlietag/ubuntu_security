@@ -2,10 +2,10 @@
 local os_commands=(
 /usr/bin/chfn
 /usr/bin/chsh
-/bin/login
-/bin/ls
+/usr/bin/login
+/usr/bin/ls
 /usr/bin/passwd
-/bin/ps
+/usr/bin/ps
 /usr/bin/top
 /bin/netstat
 /sbin/ifconfig

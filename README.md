@@ -763,3 +763,6 @@ Table of Contents
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.3...v2.0.4
       * `f2b_nginx_check_banned.sh`: typo
       * `check_fail2ban.sh`: typo
+  * tag: v2.0.5
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.4...v2.0.5
+      * Check OS command: fix command location error
