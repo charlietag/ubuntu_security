@@ -9,7 +9,7 @@ test_fail2ban_config_status() {
 #                        diff <(echo "${f2b_status}") <(echo "${f2b_iptables}")  ; \
 #                        diff <(echo "${f2b_status}") <(echo "${f2b_ipset}")
 #                    )"
-  local f2b_nft="$(nft list ruleset |grep "${test_ban_ip}")"
+  local f2b_nft="$(nft list ruleset 2>/dev/null |grep "${test_ban_ip}")"
   local diff_check="$(  diff <(echo "${f2b_status}") <(echo "${f2b_config}")    ; \
                         diff <(cat /etc/fail2ban/jail.local /etc/fail2ban/jail.d/*.local 2>/dev/null | grep -vE '^[[:space:]]*#' | grep -E '\[[[:print:]]+\]' | grep -v 'DEFAULT' | wc -l) <(echo "${f2b_nft}" | wc -l)
                     )"
