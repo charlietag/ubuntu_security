@@ -759,3 +759,6 @@ Table of Contents
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.2...v2.0.3
       * f2b_nginx_check_banned.sh: no more restart nginx
       * check_fail2ban.sh: no more warning
+  * tag: v2.0.4
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.3...v2.0.4
+      * f2b_nginx_check_banned.sh: typo

@@ -65,6 +65,7 @@ main() {
     #
     # #nginx -s reload && echo -e "${THIS_BANNED_CONTENTS}" > ${PRE_BANNED_LIST}
     # systemctl restart nginx  && echo -e "${THIS_BANNED_CONTENTS}" > ${PRE_BANNED_LIST}
+    echo -e "${THIS_BANNED_CONTENTS}" > ${PRE_BANNED_LIST}
     # ---- only required, using ipset to block ip -----
 
   elif [[ -n "${DIFF_IP_SUBTRACT}" ]]; then
