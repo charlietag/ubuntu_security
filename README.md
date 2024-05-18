@@ -750,3 +750,7 @@ Table of Contents
   * tag: v2.0.1
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.0...v2.0.1
       * Ubuntu 24.04, dstat ---> pcp (pmlogger, pcproxy, etc.). So stop installing dstat by default
+* 2024/05/19
+  * tag: v2.0.2
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.1...v2.0.2
+      * Ubuntu 24.04, fail2ban default is version 1.0.x , which is lack of python3 module asynchat, and this module is removed from python 3.12. Install `fail2ban 1.1 version instead`
