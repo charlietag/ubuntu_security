@@ -766,3 +766,6 @@ Table of Contents
   * tag: v2.0.5
     * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.4...v2.0.5
       * Check OS command: fix command location error
+  * tag: v2.0.6
+    * changelog: https://github.com/charlietag/ubuntu_security/compare/v2.0.5...v2.0.6
+      * Nginx http2 syntax for new nginx version
